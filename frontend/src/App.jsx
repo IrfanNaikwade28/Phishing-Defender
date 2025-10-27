@@ -20,7 +20,7 @@ export default function App() {
     <AuthProvider>
       <div className="min-h-screen text-gray-900 dark:text-gray-100 bg-gradient-to-b from-white to-gray-50 dark:from-gray-950 dark:to-gray-900">
         <Navbar />
-        <main className="max-w-6xl mx-auto p-4">
+        <main className="max-w-6xl mx-auto p-2">
           <AnimatePresence mode="wait">
             <motion.div
               key={location.pathname}

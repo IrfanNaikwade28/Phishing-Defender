@@ -57,3 +57,21 @@ CORS_ORIGINS=http://localhost:5173
 
 ## Next Steps
 - Add WHOIS age check, email alerts, admin dashboard, and tests
+
+Some URLs:
+1.red:
+http://update-security-check.now123.biz
+http://paypal.com-user-login-confirmation.ga
+http://bankofamerica-login-alert.cf
+https://amazon-support-billing-error.tk
+http://google-verify-user-login.ml
+http://dropboxsecurefiles.gq
+
+2.green:
+https://www.google.com
+https://github.com
+https://openai.com
+https://docs.python.org
+https://vercel.com
+https://developer.mozilla.org
+https://www.microsoft.com

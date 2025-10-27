@@ -6,9 +6,12 @@ import { ShieldCheck, Moon, Sun, LayoutDashboard, History as HistoryIcon, User, 
 export default function Navbar() {
   const { token, user, logout } = useAuth()
   const navigate = useNavigate()
-  const [dark, setDark] = useState(() => (
-    typeof window !== 'undefined' && localStorage.getItem('theme') === 'dark'
-  ))
+  const [dark, setDark] = useState(() => {
+    if (typeof window === 'undefined') return true // default dark on SSR
+    const saved = localStorage.getItem('theme')
+    // Default to dark when no saved preference
+    return saved ? saved === 'dark' : true
+  })
 
   const handleLogout = () => {
     logout()

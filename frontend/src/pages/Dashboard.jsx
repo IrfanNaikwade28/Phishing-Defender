@@ -2,7 +2,8 @@ import { useState } from 'react'
 import api from '../api/api'
 import toast from 'react-hot-toast'
 import URLCard from '../components/URLCard'
-import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import Gauge from '../components/Gauge'
+import RecentRiskGauge from '../components/RecentRiskGauge'
 import { motion } from 'framer-motion'
 
 export default function Dashboard() {
@@ -10,6 +11,7 @@ export default function Dashboard() {
   const [result, setResult] = useState(null)
   const [loading, setLoading] = useState(false)
   const [recent, setRecent] = useState([])
+  const statusFor = (s) => (s < 40 ? 'Safe' : s < 70 ? 'Suspicious' : 'Unsafe')
 
   const onCheck = async (e) => {
     e.preventDefault()
@@ -18,7 +20,10 @@ export default function Dashboard() {
     try {
       const res = await api.post('/check-url', { url })
       setResult(res.data)
-      setRecent((r) => [{ score: res.data.risk_score, name: new Date().toLocaleTimeString() }, ...r].slice(0, 10))
+      setRecent((r) => [
+        { score: res.data.risk_score, status: statusFor(res.data.risk_score), name: new Date().toLocaleTimeString() },
+        ...r
+      ].slice(0, 10))
     } catch (e) {
       toast.error(e.response?.data?.error || 'Check failed')
     } finally {
@@ -26,16 +31,21 @@ export default function Dashboard() {
     }
   }
 
+  // Compose items for the gauge: prefer current result, then recent
+  const displayRecent = result
+    ? [{ score: result.risk_score, status: statusFor(result.risk_score), name: 'Now' }, ...recent].slice(0, 10)
+    : recent
+
   return (
     <div>
-      <section className="min-h-[40vh] flex items-center">
+      <section className="min-h-[30vh] flex items-center">
         <motion.div
           className="card w-full"
           initial={{ opacity: 0, y: 8, scale: 0.98 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.25 }}
         >
-          <form className="flex flex-col sm:flex-row gap-2" onSubmit={onCheck}>
+          <form className="flex flex-col sm:flex-row gap-1" onSubmit={onCheck}>
             <input className="input" placeholder="Paste a URL to scan (e.g., https://example.com)" value={url} onChange={e=>setUrl(e.target.value)} />
             <button className="btn" type="submit" disabled={loading}>
               {loading ? 'Checking…' : 'Scan Now'}
@@ -48,23 +58,8 @@ export default function Dashboard() {
       <URLCard result={result} />
 
       <div className="card mt-4">
-        <h2 className="font-semibold mb-2">Recent Scores</h2>
-        <div className="h-40">
-          <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={recent}>
-              <defs>
-                <linearGradient id="colorScore" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#6366f1" stopOpacity={0.8}/>
-                  <stop offset="95%" stopColor="#6366f1" stopOpacity={0}/>
-                </linearGradient>
-              </defs>
-              <XAxis dataKey="name" hide />
-              <YAxis domain={[0,100]} />
-              <Tooltip />
-              <Area type="monotone" dataKey="score" stroke="#6366f1" fillOpacity={1} fill="url(#colorScore)" />
-            </AreaChart>
-          </ResponsiveContainer>
-        </div>
+        <h2 className="font-semibold">Recent Risk Scores</h2>
+        <RecentRiskGauge items={displayRecent} />
       </div>
     </div>
   )
