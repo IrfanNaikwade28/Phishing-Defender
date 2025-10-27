@@ -2,6 +2,7 @@ import { useState } from 'react'
 import api from '../api/api'
 import toast from 'react-hot-toast'
 import { useAuth } from '../context/AuthContext'
+import { motion } from 'framer-motion'
 
 export default function Profile() {
   const { user } = useAuth()
@@ -19,7 +20,11 @@ export default function Profile() {
   }
 
   return (
-    <div className="card">
+    <motion.div className="card"
+      initial={{ opacity: 0, y: 8, scale: 0.98 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: 0.25 }}
+    >
       <h1 className="text-xl font-semibold">Profile</h1>
       <p className="text-sm text-gray-500">{user?.email}</p>
 
@@ -27,6 +32,6 @@ export default function Profile() {
         <input className="input" type="password" placeholder="New password" value={newPassword} onChange={e=>setNewPassword(e.target.value)} />
         <button className="btn" type="submit">Update</button>
       </form>
-    </div>
+    </motion.div>
   )
 }

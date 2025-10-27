@@ -3,6 +3,7 @@ import api from '../api/api'
 import toast from 'react-hot-toast'
 import URLCard from '../components/URLCard'
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import { motion } from 'framer-motion'
 
 export default function Dashboard() {
   const [url, setUrl] = useState('')
@@ -27,12 +28,22 @@ export default function Dashboard() {
 
   return (
     <div>
-      <div className="card">
-        <form className="flex gap-2" onSubmit={onCheck}>
-          <input className="input" placeholder="https://example.com" value={url} onChange={e=>setUrl(e.target.value)} />
-          <button className="btn" type="submit" disabled={loading}>{loading ? 'Checking...' : 'Check URL'}</button>
-        </form>
-      </div>
+      <section className="min-h-[40vh] flex items-center">
+        <motion.div
+          className="card w-full"
+          initial={{ opacity: 0, y: 8, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.25 }}
+        >
+          <form className="flex flex-col sm:flex-row gap-2" onSubmit={onCheck}>
+            <input className="input" placeholder="Paste a URL to scan (e.g., https://example.com)" value={url} onChange={e=>setUrl(e.target.value)} />
+            <button className="btn" type="submit" disabled={loading}>
+              {loading ? 'Checking…' : 'Scan Now'}
+            </button>
+          </form>
+          <p className="mt-2 text-xs text-gray-500">We’ll analyze the URL for phishing signals. Your data stays private.</p>
+        </motion.div>
+      </section>
 
       <URLCard result={result} />
 
