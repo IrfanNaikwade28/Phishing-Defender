@@ -1,0 +1,25 @@
+# Python/Flask
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+instance/
+.venv/
+venv/
+env/
+.env
+.env.*
+.pytest_cache/
+*.sqlite3
+*.db
+# VSCode
+.vscode/
+# JetBrains
+.idea/
+# OS
+.DS_Store
+# Byte-compiled / optimized / DLL files
+*.so
+# Logs
+*.log
