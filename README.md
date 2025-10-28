@@ -1,17 +1,26 @@
-# 🛡️ Phishing Defender (SaaS)
+# 🛡️ Phishing Defender
 
 A production-style phishing detection web app built with Flask (API) and React (Vite + Tailwind), featuring JWT auth, URL analysis, history, and a modern dashboard UI.
 
+
+## Demo Video
+Coming soon
+
 ## Tech
 - Backend: Flask, JWT, SQLAlchemy, Migrate, CORS, python-dotenv
-- Frontend: React (Vite), TailwindCSS, React Router, Axios, React Hot Toast, Recharts
+- Frontend: React (Vite), TailwindCSS, React Router, Axios, React Hot Toast, Recharts, Framer Motion, lucide-react
 - DB: SQLite (local) — upgradeable to PostgreSQL via `DATABASE_URL`
+
+### UI Highlights
+- Minimal, modern radial gauge (green → yellow → red) with smooth animations
+- Subtle page transitions and microinteractions
+- Dark mode enabled by default with a navbar toggle
 
 ## Run Locally (Windows PowerShell)
 
 ### 1) Backend
 ```powershell
-cd "phishing-saas/backend"
+cd "backend"
 python -m venv venv
 .\venv\Scripts\activate
 pip install -r requirements.txt
@@ -28,7 +37,7 @@ API runs at http://127.0.0.1:5000
 
 ### 2) Frontend
 ```powershell
-cd "phishing-saas/frontend"
+cd "frontend"
 npm install
 npm run dev
 ```
@@ -53,25 +62,7 @@ CORS_ORIGINS=http://localhost:5173
 ## Notes
 - JWT is stored in localStorage by the frontend and sent as `Authorization: Bearer <token>`
 - URL analysis uses heuristics: HTTPS, redirects, suspicious keywords, length/encoding, subdomains, hyphens, reachability
-- Tailwind CSS is pre-configured; dark mode enabled
+- Tailwind CSS is pre-configured; dark mode enabled (default)
 
 ## Next Steps
 - Add WHOIS age check, email alerts, admin dashboard, and tests
-
-Some URLs:
-1.red:
-http://update-security-check.now123.biz
-http://paypal.com-user-login-confirmation.ga
-http://bankofamerica-login-alert.cf
-https://amazon-support-billing-error.tk
-http://google-verify-user-login.ml
-http://dropboxsecurefiles.gq
-
-2.green:
-https://www.google.com
-https://github.com
-https://openai.com
-https://docs.python.org
-https://vercel.com
-https://developer.mozilla.org
-https://www.microsoft.com
