@@ -4,7 +4,8 @@ A production-style phishing detection web app built with Flask (API) and React (
 
 
 ## Demo Video
-Coming soon
+https://github.com/user-attachments/assets/65b2366a-aba5-487e-98a3-6ceb0a553d60
+
 
 ## Tech
 - Backend: Flask, JWT, SQLAlchemy, Migrate, CORS, python-dotenv
